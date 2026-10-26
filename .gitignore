@@ -1,0 +1,76 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/mcp.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Android / Gradle
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.keystore
+*.jks
+
+# Personal local catalog
+data/
+
+# Course example outputs and local toolchains
+.tools/
+study-content/**/examples/**/out/
+study-content/**/examples/**/.gradle/
+study-content/**/examples/**/build/
+study-content/**/examples/**/.venv/
+study-content/**/examples/**/*.sqlite
+
+# Authentication secrets and local state
+.env
+.env.*
+!.env.example
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite
+*.sqlite3
+*.db
+
+# Generated browser validation (may contain private media)
+validation/playwright-report/
+validation/test-results/
+validation/playwright-results.json
+validation/*.png
+
+# Scratch output, local tool config, tunnel logs and security-scan results never belong in the repository
+.tmp-*
+.mcp.json
+strix_runs/
+validation/hosting/
+
+# Local-only maintainer records, including case and separator variants.
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][ _-][Ll][Oo][Gg]
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][ _-][Ll][Oo][Gg][._ -]*
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][ _-][Ll][Oo][Gg][Ss]
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][ _-][Ll][Oo][Gg][Ss][._ -]*
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][Ll][Oo][Gg]
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][Ll][Oo][Gg][._ -]*
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][Ll][Oo][Gg][Ss]
+[Ff][Ee][Aa][Tt][Uu][Rr][Ee][Ll][Oo][Gg][Ss][._ -]*

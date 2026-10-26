@@ -1,0 +1,2 @@
+import { defineConfig } from '@playwright/test'
+export default defineConfig({testDir:'./tests/e2e',timeout:180000,expect:{timeout:20000},workers:1,fullyParallel:false,reporter:[['list'],['html',{outputFolder:'validation/playwright-report',open:'never'}],['json',{outputFile:'validation/playwright-results.json'}]],outputDir:'validation/test-results',use:{actionTimeout:20000,channel:'chrome',headless:true,trace:'retain-on-failure',screenshot:'only-on-failure',launchOptions:{args:['--autoplay-policy=no-user-gesture-required']}}})

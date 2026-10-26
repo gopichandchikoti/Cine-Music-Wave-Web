@@ -1,0 +1,7 @@
+packages:
+  - '.'
+allowBuilds:
+  esbuild: true
+overrides:
+  # GHSA-27r3-jxmh-p828: body-parser below 2.4.0 can be exhausted by trailing bytes after a compressed body.
+  'body-parser': '>=2.4.0'

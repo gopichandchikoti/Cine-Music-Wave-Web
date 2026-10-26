@@ -1,0 +1,30 @@
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.site-footer a:hover {
+  color: var(--ink);
+}
+
+.site-footer.is-inline {
+  display: inline;
+}
+
+.site-footer.is-inline a {
+  display: inline;
+  min-height: 0;
+  margin-left: 10px;
+  font-size: inherit;
+}

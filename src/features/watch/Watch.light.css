@@ -1,0 +1,100 @@
+/*
+ * Watch in the light theme: pale green paper. The dark theme (Watch.css, Entertainment.css) is the approved look and is not touched; this
+ * file only changes colours, and only while <html data-theme="light">. Measured contrast on the page: ink 14.8:1, muted 5.9:1, the accent
+ * #0b7a42 4.9:1 (the dark theme's #34e58a is too pale for paper), text on the accent 5.4:1, warning text 5.0:1. tests/music/theme.test.ts
+ * keeps these above WCAG AA. Pictures stay dark: poster cards, the title page, the pop-up card and the player read the dark palette.
+ */
+
+:root[data-theme='light'] .watch-shell {
+  --w-bg: #eef5f0;
+  --w-raised: #fbfdfb;
+  --w-surface: #e1ede5;
+  --w-surface-2: #d3e4d9;
+  --w-line: rgba(8, 60, 36, 0.16);
+  --w-ink: #0b2417;
+  --w-muted: #456554;
+  --w-accent: #0b7a42;
+  --w-accent-hover: #0a6a39;
+  --w-accent-ink: #ffffff;
+  --w-warn: #8a6100;
+  background:
+    radial-gradient(1100px 620px at 85% -8%, rgba(11, 122, 66, 0.1), transparent 62%),
+    radial-gradient(900px 520px at -8% 38%, rgba(11, 122, 66, 0.07), transparent 62%),
+    var(--w-bg);
+}
+
+/* Pictures and video: the dark palette, in both themes. */
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) {
+  --w-bg: #03110a;
+  --w-raised: #072216;
+  --w-surface: #0d3322;
+  --w-surface-2: #14472f;
+  --w-line: rgba(140, 255, 190, 0.15);
+  --w-ink: #ecfdf3;
+  --w-muted: #9bc4ad;
+  --w-accent: #34e58a;
+  --w-accent-hover: #6cf2ab;
+  --w-accent-ink: #022312;
+  --w-warn: #f3d27a;
+  color: #ecfdf3;
+}
+
+/* --- top bar and controls ------------------------------------------------------------------------------------------------------- */
+
+:root[data-theme='light'] .watch-topbar { background: linear-gradient(to bottom, rgba(238, 245, 240, 0.92), rgba(238, 245, 240, 0)); }
+:root[data-theme='light'] .watch-topbar.is-solid { background: rgba(238, 245, 240, 0.94); }
+:root[data-theme='light'] .watch-sections button.is-active { background: rgba(11, 122, 66, 0.12); }
+:root[data-theme='light'] :is(.watch-search, .watch-icon-button, .watch-mode-switch) { background: rgba(255, 255, 255, 0.86); }
+:root[data-theme='light'] .watch-banner { background: rgba(255, 255, 255, 0.97); box-shadow: 0 8px 24px rgba(11, 36, 23, 0.18); }
+:root[data-theme='light'] .watch-banner.is-warning { border-color: rgba(138, 97, 0, 0.4); }
+:root[data-theme='light'] .watch-toast { box-shadow: 0 12px 30px rgba(11, 36, 23, 0.2); }
+:root[data-theme='light'] .watch-button { background: rgba(11, 36, 23, 0.08); }
+:root[data-theme='light'] .watch-button:hover { background: rgba(11, 36, 23, 0.14); }
+:root[data-theme='light'] .watch-button.is-primary { background: var(--w-accent); }
+:root[data-theme='light'] .watch-button.is-primary:hover { background: var(--w-accent-hover); }
+:root[data-theme='light'] .watch-round { border-color: rgba(11, 36, 23, 0.35); background: rgba(255, 255, 255, 0.78); }
+:root[data-theme='light'] .watch-round:hover { border-color: var(--w-ink); background: rgba(255, 255, 255, 0.95); }
+:root[data-theme='light'] .watch-round.is-primary { border-color: var(--w-accent); background: var(--w-accent); }
+:root[data-theme='light'] .watch-round.is-ghost { border-color: transparent; background: transparent; }
+:root[data-theme='light'] .watch-spinner { border-color: rgba(11, 36, 23, 0.2); border-top-color: var(--w-accent); }
+
+/* The sheen every button gets (Entertainment.css) is nearly white on paper: use a white one with a green hairline, and leave filled buttons plain. */
+:root[data-theme='light'] .watch-shell button {
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6) 60%, rgba(255, 255, 255, 0.75));
+  border-color: rgba(11, 36, 23, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(11, 36, 23, 0.05), 0 4px 16px rgba(11, 36, 23, 0.08);
+}
+:root[data-theme='light'] .watch-shell :is(.watch-button.is-primary, .watch-round.is-primary) { background-image: none; border-color: transparent; }
+:root[data-theme='light'] .watch-shell :is(.watch-sections button:not(.is-active), .watch-mode-switch button:not(.is-active), .watch-search button, .watch-rail-arrow) {
+  background-image: none; border-color: transparent; box-shadow: none;
+}
+/* …and the original sheen back on pictures and video. */
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) button, :root[data-theme='light'] .watch-shell button.watch-card {
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.045) 60%, rgba(255, 255, 255, 0.1));
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), inset 0 -1px 0 rgba(255, 255, 255, 0.06), 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) :is(.watch-button, .watch-round) { background-color: rgba(236, 253, 243, 0.16); }
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) :is(.watch-button.is-primary, .watch-round.is-primary) { background-color: var(--w-accent); }
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) .watch-round { background-color: rgba(3, 17, 10, 0.55); border-color: rgba(236, 253, 243, 0.5); }
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) .watch-round.is-primary { border-color: var(--w-accent); background-color: var(--w-accent); }
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) .watch-round.is-ghost { border-color: transparent; background-color: transparent; background-image: none; }
+:root[data-theme='light'] :is(.watch-scrim, .watch-player, .watch-hover) .watch-spinner { border-color: rgba(236, 253, 243, 0.25); border-top-color: var(--w-accent); }
+
+/* --- the billboard fades into paper; text sits on a pale veil ----------------------------------------------------------------------- */
+
+:root[data-theme='light'] .watch-billboard-shade {
+  background:
+    linear-gradient(to right, rgba(238, 245, 240, 0.95) 0%, rgba(238, 245, 240, 0.8) 45%, rgba(238, 245, 240, 0.62) 100%),
+    linear-gradient(to top, var(--w-bg) 2%, rgba(238, 245, 240, 0) 45%);
+}
+:root[data-theme='light'] .watch-billboard-copy h1, :root[data-theme='light'] .watch-billboard-overview { text-shadow: none; }
+:root[data-theme='light'] .watch-rail-arrow.is-back { background: linear-gradient(to right, rgba(238, 245, 240, 0.88), rgba(238, 245, 240, 0)); }
+:root[data-theme='light'] .watch-rail-arrow.is-forward { background: linear-gradient(to left, rgba(238, 245, 240, 0.88), rgba(238, 245, 240, 0)); }
+
+/* --- poster cards: a picture with its name on a dark fade, white in both themes -------------------------------------------------- */
+
+:root[data-theme='light'] .watch-card { background: #0d3322; }
+:root[data-theme='light'] .watch-card .watch-card-name { color: #ffffff; }
+:root[data-theme='light'] .watch-card .watch-card-badge { color: #022312; background: #34e58a; }
+:root[data-theme='light'] .watch-card .watch-card-progress > span { background: #34e58a; }

@@ -1,0 +1,53 @@
+/*
+ * Liquid glass: the translucent, light-bending material of Apple's recent interfaces, used for the video and music players.
+ * A panel blurs and saturates whatever is behind it, has a bright rim where light would catch the edge, and a soft glow in one corner.
+ * Put `glass` on an element that sets its own border-radius; children stay above the glow.
+ */
+
+.glass {
+  --glass-tint: 255, 255, 255;
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(140deg, rgba(var(--glass-tint), 0.17), rgba(var(--glass-tint), 0.05) 60%, rgba(var(--glass-tint), 0.09));
+  -webkit-backdrop-filter: blur(26px) saturate(1.9) brightness(1.06);
+  backdrop-filter: blur(26px) saturate(1.9) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 22px rgba(255, 255, 255, 0.05),
+    0 14px 44px rgba(0, 0, 0, 0.38);
+}
+
+/* The specular glow: light pooling in the top-left corner and a faint return in the bottom-right. */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 42%),
+    radial-gradient(90% 80% at 100% 100%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%);
+  mix-blend-mode: soft-light;
+}
+
+/* A control that sits on glass: a smaller pane that brightens when pressed. */
+.glass-button {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  backdrop-filter: blur(14px) saturate(1.6);
+}
+
+/* Browsers without backdrop blur get a darker, solid pane so text stays readable. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(28, 30, 40, 0.92); }
+  .glass-button { background: rgba(255, 255, 255, 0.16); }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: rgba(22, 24, 32, 0.96); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}

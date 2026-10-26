@@ -1,0 +1,45 @@
+:root {
+  --paper: #f4f0e7;
+  --paper-raised: #fffdf8;
+  --ink: #1d2523;
+  --muted: #71807a;
+  --line: rgba(29, 37, 35, 0.12);
+  --line-strong: rgba(29, 37, 35, 0.2);
+  --accent: #e66d43;
+  --accent-soft: rgba(230, 109, 67, 0.13);
+  --teal: #1e6b68;
+  --teal-soft: rgba(30, 107, 104, 0.13);
+  --shadow: 0 24px 70px rgba(43, 45, 32, 0.14);
+  --shadow-small: 0 10px 28px rgba(43, 45, 32, 0.1);
+  --code: #212a2a;
+  --surface-radius: 18px;
+}
+
+:root[data-theme='dark'] {
+  --paper: #111917;
+  --paper-raised: #182321;
+  --ink: #ebefe5;
+  --muted: #91a19a;
+  --line: rgba(235, 239, 229, 0.1);
+  --line-strong: rgba(235, 239, 229, 0.18);
+  --accent: #ef825a;
+  --accent-soft: rgba(239, 130, 90, 0.14);
+  --teal: #6bb7a4;
+  --teal-soft: rgba(107, 183, 164, 0.13);
+  --shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+  --shadow-small: 0 12px 32px rgba(0, 0, 0, 0.22);
+  --code: #0e1514;
+}
+
+* { box-sizing: border-box; }
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+
+.eyebrow { font:700 10px/1.2 'DM Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 }
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.spin-icon{animation:spin 900ms linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.spin-icon{animation:none}}
+
+.brand-mark { width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:var(--teal);color:#eef4e9;box-shadow:5px 5px 0 rgba(230,109,67,.35);transform:rotate(-4deg) }

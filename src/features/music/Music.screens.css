@@ -1,0 +1,108 @@
+/*
+ * The newer Music screens: the phone dock, the full-bleed singer and album pages, the library's section buttons and overview shelves.
+ * Everything here reads the --m-* variables, so it follows the theme (Music.light.css only fixes shadows and glass). Loaded after
+ * Music.css, so a rule here beats the same-specificity rule there.
+ */
+
+/* --- library section buttons ----------------------------------------------------------------------------------------------------- */
+
+.music-pills { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0; scrollbar-width: none; }
+.music-pills::-webkit-scrollbar { display: none; }
+.music-pills[data-indicator]::after { border-radius: 999px; background: var(--m-accent); }
+.music-pill-tab { position: relative; flex: none; min-width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0; border: 1px solid var(--m-line); border-radius: 999px; color: var(--m-muted); background: var(--m-surface); font-size: 15px; font-weight: 700; transition: color 0.15s; }
+.music-pill-tab:hover:not(.is-on) { color: var(--m-ink); background: var(--m-surface-hover); }
+.music-pill-tab.is-on { padding: 0 18px; border-color: transparent; color: var(--m-accent-ink); background: transparent; animation: music-pill-label 0.32s var(--spring-snappy, ease-out) backwards; }
+.music-pills:not([data-indicator]) .music-pill-tab.is-on { background: var(--m-accent); }
+.music-pill-tab span { white-space: nowrap; }
+@keyframes music-pill-label { from { opacity: 0.4; } to { opacity: 1; } }
+
+/* A shelf title that opens the whole list. */
+.music-shelf-title { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; }
+.music-shelf-title svg { color: var(--m-muted); }
+
+/* --- song rows without a number column, and hairlines between rows ---------------------------------------------------------------- */
+
+.music-row.is-flush:not(.is-current) .music-row-lead { display: none; }
+.music-shell .music-row.is-flush:not(.is-current) .music-row-main { grid-template-columns: auto minmax(0, 1fr); }
+.music-row.has-divider::after { content: ''; position: absolute; right: 6px; bottom: 0; left: 66px; height: 1px; background: var(--m-line); pointer-events: none; }
+.music-shell.is-compact .music-columns.has-peek { grid-auto-columns: var(--col, 92%); }
+
+/* --- the phone dock --------------------------------------------------------------------------------------------------------------- */
+
+.music-phonedock { position: fixed; z-index: 41; right: 14px; bottom: calc(10px + env(safe-area-inset-bottom)); left: 14px; display: flex; align-items: center; gap: 8px; pointer-events: none; }
+.music-phonedock > * { pointer-events: auto; }
+.music-phonedock-gap { flex: 1; pointer-events: none; }
+.music-phonedock-section { position: relative; flex: none; }
+.music-phonedock-button { width: 56px; height: 56px; flex: none; display: grid; place-items: center; padding: 0; border-radius: 50%; color: var(--m-accent); transition: transform 0.12s; }
+.music-phonedock-button:active { transform: scale(0.92); }
+.music-phonedock-button[aria-current='page'] { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), 0 0 0 2px var(--m-accent), 0 14px 44px rgba(0, 0, 0, 0.3); }
+.music-phonedock-menu { position: absolute; bottom: calc(100% + 8px); left: 0; width: 230px; display: grid; gap: 2px; padding: 6px; border-radius: 22px; transform-origin: 0 100%; background: linear-gradient(140deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(16, 18, 28, 0.58); animation: music-dock-pop-in var(--spring-bouncy-time, 400ms) var(--spring-bouncy, ease-out) backwards; }
+.music-phonedock-menu button { min-height: 50px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; font-size: 16px; text-align: left; }
+.music-phonedock-menu button:hover { background: rgba(255, 255, 255, 0.14); }
+.music-phonedock-menu button.is-on svg { color: var(--m-accent); }
+[data-presence='exit'] .music-phonedock-menu { animation: music-dock-pop-out 180ms cubic-bezier(0.4, 0, 1, 1) forwards; }
+@keyframes music-dock-pop-in { from { opacity: 0; transform: scale(0.86); } to { opacity: 1; transform: none; } }
+@keyframes music-dock-pop-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(0.92); } }
+
+/* The mini player sits in the dock as a rounded pill instead of floating above a tab bar. */
+.music-phonedock .music-mini { position: relative; inset: auto; z-index: auto; flex: 1; min-width: 0; height: 56px; gap: 2px; padding: 0 4px 0 8px; border-radius: 28px; }
+.music-phonedock .music-mini-main { gap: 10px; }
+.music-phonedock .music-mini-cover { width: 40px; }
+.music-phonedock .music-mini-progress { right: 24px; bottom: 4px; left: 24px; }
+.music-phonedock .music-icon-button { width: 44px; height: 44px; }
+.music-shell.is-compact .music-main, .music-shell.is-compact.has-player .music-main { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
+.music-shell.is-compact .music-toast { bottom: calc(100px + env(safe-area-inset-bottom)); }
+
+/* --- full-bleed singer and album pages (phone width) --------------------------------------------------------------------------------- */
+
+.music-shell.is-compact.is-immersive { grid-template-rows: minmax(0, 1fr); grid-template-areas: 'main'; gap: 0; padding-top: 0; }
+.music-shell.is-immersive .music-topbar { display: none; }
+.music-shell.is-compact.is-immersive .music-main { border-radius: 0; background: none; }
+
+/* The page takes a tint from the picture: the page colour moved towards the picture's colour (32% in the dark theme, 20% in the light). */
+.music-hero-page { --hero-h: min(calc(100vw * 1.02 + 40px + var(--hero-extra, 0px)), 82svh); --tint-strength: 32%; --hero-page: color-mix(in srgb, rgb(var(--tint, 9, 10, 16)) var(--tint-strength), var(--m-bg)); min-height: 100%; background: linear-gradient(180deg, var(--hero-page) 0, var(--hero-page) var(--hero-h), transparent calc(var(--hero-h) + 520px)); }
+:root[data-theme='light'] .music-hero-page { --tint-strength: 20%; }
+.music-hero { position: relative; height: var(--hero-h); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 0 20px 22px; overflow: hidden; text-align: center; }
+.music-hero-art { position: absolute; inset: 0; }
+.music-hero-art img, .music-hero-art .music-cover { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; object-fit: cover; }
+.music-hero-art .music-cover-initials { display: none; }
+.music-hero-art::after { content: ''; position: absolute; inset: 0 0 auto; height: 150px; background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)); }
+.music-hero-fade { position: absolute; inset: auto 0 -2px; height: calc(66% + 2px); background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--hero-page) 80%, transparent) 58%, var(--hero-page) 100%); }
+.music-hero-copy { position: relative; width: 100%; display: grid; justify-items: center; gap: 16px; }
+.music-hero-copy h1 { max-width: 100%; font-size: clamp(30px, 9vw, 44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; text-wrap: balance; overflow-wrap: anywhere; }
+.music-hero-credits { font-size: 16px; line-height: 1.4; }
+.music-hero-credits button { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 700; }
+.music-hero-credits button:hover { text-decoration: underline; }
+.music-hero-meta { margin-top: -8px; color: var(--m-muted); font-size: 13px; }
+.music-hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.music-hero-actions.is-album { margin-top: 4px; }
+.music-action-circle { width: 60px; height: 60px; flex: none; display: grid; place-items: center; padding: 0; border-radius: 50%; color: var(--m-ink); transition: transform 0.12s; }
+.music-action-circle.is-small { width: 54px; height: 54px; }
+.music-action-circle.is-on { color: var(--m-accent); }
+.music-action-circle:active:not(:disabled) { transform: scale(0.92); }
+.music-hero-play { min-width: 150px; height: 54px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 28px; border: 0; border-radius: 27px; color: var(--m-accent-ink); background: var(--m-ink); font-size: 17px; font-weight: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); transition: transform 0.12s; }
+.music-hero-play:active:not(:disabled) { transform: scale(0.97); }
+.music-hero-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 14px 14px 30px; }
+
+/* Back and "…", pinned over the picture. Dark glass with white icons in both themes: they sit on artwork, not on the page. */
+.music-hero-bar { position: fixed; z-index: 45; top: calc(env(safe-area-inset-top) + 8px); right: 14px; left: 14px; display: flex; justify-content: space-between; pointer-events: none; }
+.music-hero-bar > * { pointer-events: auto; }
+.music-hero-button { width: 46px; height: 46px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50%; color: #fff; background: rgba(8, 9, 14, 0.28); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+.music-hero-button:active:not(:disabled) { transform: scale(0.92); }
+
+.music-featured { display: flex; align-items: center; gap: 6px; padding: 10px; border-radius: 22px; }
+.music-featured-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: transparent; text-align: left; }
+.music-featured-cover { width: 58px; flex: none; border-radius: 8px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
+.music-featured-main > span { min-width: 0; display: grid; gap: 2px; }
+.music-featured-main small { color: var(--m-muted); font: 500 10px/1.2 'DM Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; }
+.music-featured-main strong, .music-featured-main em { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.music-featured-main strong { font-size: 17px; font-weight: 700; }
+.music-featured-main em { color: var(--m-muted); font-size: 13px; font-style: normal; }
+.music-featured-play { width: 46px; height: 46px; flex: none; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; color: var(--m-accent-ink); background: var(--m-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .music-phonedock-menu, .music-pill-tab.is-on { animation-duration: 0.01ms !important; }
+  .music-phonedock-button, .music-action-circle, .music-hero-play { transition: none; }
+  @keyframes music-dock-pop-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes music-dock-pop-out { from { opacity: 1; } to { opacity: 0; } }
+}

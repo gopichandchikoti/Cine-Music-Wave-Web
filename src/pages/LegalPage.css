@@ -1,0 +1,55 @@
+.legal-shell {
+  min-height: 100svh;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.legal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(18px, 4vw, 64px);
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-header a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.legal-body {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: clamp(28px, 6vw, 64px) clamp(18px, 4vw, 32px) 96px;
+}
+
+.legal-body h1 {
+  margin: 0 0 8px;
+  font: 600 clamp(30px, 5vw, 44px) / 1.1 'Fraunces Variable', Georgia, serif;
+  letter-spacing: -0.03em;
+}
+
+.legal-body h2 {
+  margin: 36px 0 8px;
+  font: 600 20px / 1.25 'Fraunces Variable', Georgia, serif;
+  letter-spacing: -0.015em;
+}
+
+.legal-body p {
+  margin: 0 0 14px;
+  color: color-mix(in srgb, var(--ink) 88%, var(--muted));
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.legal-body .legal-updated {
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 13px;
+}

@@ -1,0 +1,25 @@
+/* The account menu pops from its button; the profile and settings dialogs rise and settle. */
+.profile-popup {
+  transform-origin: top right;
+  animation: spring-pop-in var(--spring-bouncy-time) var(--spring-bouncy) backwards;
+}
+
+[data-presence='exit'] .profile-popup {
+  animation: spring-pop-out 180ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.account-dialog {
+  animation: spring-rise-in var(--spring-bouncy-time) var(--spring-bouncy) backwards;
+}
+
+.account-dialog::backdrop {
+  animation: spring-fade-in 200ms ease-out backwards;
+}
+
+[data-presence='exit'] .account-dialog {
+  animation: spring-rise-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+[data-presence='exit'] .account-dialog::backdrop {
+  animation: spring-fade-out 220ms ease-in forwards;
+}

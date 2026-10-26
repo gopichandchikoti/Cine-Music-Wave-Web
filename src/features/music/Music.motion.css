@@ -1,0 +1,61 @@
+/* Music: menus pop, sheets and the full-screen player slide on springs, and each one leaves the same way it came. */
+
+.music-mode-switch[data-indicator]::after {
+  border-radius: 999px;
+  background: #fff;
+}
+
+.music-mode-switch[data-indicator] button.is-active {
+  background: transparent;
+}
+
+.music-scrim {
+  animation: spring-fade-in 200ms ease-out backwards;
+}
+
+.music-menu {
+  transform-origin: 85% 0;
+  animation: spring-pop-in var(--spring-bouncy-time) var(--spring-bouncy) backwards;
+}
+
+.music-menu.is-sheet,
+.music-sheet {
+  transform-origin: 50% 100%;
+  animation: spring-sheet-in var(--spring-smooth-time) var(--spring-smooth) backwards;
+}
+
+.music-dialog {
+  animation: spring-rise-in var(--spring-bouncy-time) var(--spring-bouncy) backwards;
+}
+
+.music-popover {
+  transform-origin: 90% 100%;
+  animation: spring-pop-in var(--spring-bouncy-time) var(--spring-bouncy) backwards;
+}
+
+/* The full-screen player grows up from the bar and minimises back down to it. */
+.music-now {
+  transform-origin: 50% 100%;
+  animation: spring-expand-in var(--spring-smooth-time) var(--spring-smooth) backwards;
+}
+
+[data-presence='exit'] .music-scrim {
+  animation: spring-fade-out 220ms ease-in forwards;
+}
+
+[data-presence='exit'] .music-menu,
+[data-presence='exit'] .music-popover {
+  animation: spring-pop-out 180ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+[data-presence='exit'] .music-menu.is-sheet {
+  animation: spring-sheet-out 240ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+[data-presence='exit'] .music-dialog {
+  animation: spring-rise-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+[data-presence='exit'] .music-now {
+  animation: spring-expand-out 240ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}

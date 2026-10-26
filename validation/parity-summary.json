@@ -1,0 +1,17 @@
+{
+  "watchTitles": 289,
+  "musicTracks": 197,
+  "mediaTools": true,
+  "desktop": [
+    1440,
+    1000
+  ],
+  "mobileWidths": [
+    320,
+    390,
+    768
+  ],
+  "browserErrors": [],
+  "realVideoPlayback": true,
+  "realAudioPlayback": true
+}

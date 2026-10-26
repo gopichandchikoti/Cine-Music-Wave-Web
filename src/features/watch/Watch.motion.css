@@ -1,0 +1,35 @@
+/* Watch: the mode switch slides, the title dialog rises on a bouncy spring, cards and the player open on springs. */
+
+.watch-mode-switch[data-indicator]::after {
+  border-radius: 6px;
+  background: var(--w-accent);
+}
+
+.watch-mode-switch[data-indicator] button.is-active {
+  background: transparent;
+}
+
+.watch-hover {
+  animation: watch-pop var(--spring-bouncy-time) var(--spring-bouncy) both;
+}
+
+.watch-scrim {
+  animation: spring-fade-in 200ms ease-out both;
+}
+
+.watch-dialog {
+  animation: spring-rise-in var(--spring-bouncy-time) var(--spring-bouncy) both;
+}
+
+.watch-player {
+  transform-origin: 50% 60%;
+  animation: spring-expand-in var(--spring-smooth-time) var(--spring-smooth) backwards;
+}
+
+[data-presence='exit'] .watch-scrim {
+  animation: spring-fade-out 220ms ease-in forwards;
+}
+
+[data-presence='exit'] .watch-dialog {
+  animation: spring-rise-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}

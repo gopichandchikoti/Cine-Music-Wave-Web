@@ -694,8 +694,7 @@ Read `system_design.md` and `FEATURE_LOG.md` before substantial work. Use `OPERA
 - Keep licensed or owner-authorised media only. No DRM bypass, no scraping, no redistribution without rights.
 - Do not claim hosted authentication, OAuth or email works: only local accounts are implemented and recorded in
   `AUTH_VALIDATION.md`. Playwright totals in `VALIDATION.md` need both apps running and real media fixtures.
-- Do not touch `.env`, `data/`, `dist/`, `validation/` or `THIRD_PARTY_NOTICES.txt` unless asked. Git has deliberately not been
-  initialised here; do not run `git init` or add a remote.
+- Do not touch `.env`, `data/`, `dist/`, `validation/` or `THIRD_PARTY_NOTICES.txt` unless asked. Keep existing Git history and remotes unchanged; do not initialise or reconfigure Git.
 
 ## Commands
 

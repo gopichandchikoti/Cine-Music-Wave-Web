@@ -91,3 +91,47 @@ Evidence for the security pass (details in `FEATURE_LOG.md` and, for the shared 
 Public hosting (`scripts\host-public.ps1`) was reviewed, not re-run: it binds `127.0.0.1`, keeps registration closed unless `-AllowSignup` is passed, passes production settings as process variables, and trusts only the loopback proxy, so the real client address reaches the rate limits. It still serves your media to every signed-in account; serve only media you own or are licensed to share.
 
 Not verified: the Playwright suite (`pnpm test:e2e`), a real browser pass over the changed routes, the live tunnel, and Strix.
+
+## Vercel deployment diagnosis and configuration (2026-10-28)
+
+The shared Vercel project showed production commit 61750a9 as Ready. Live GETs
+to cine-music-wave-web.vercel.app returned: / 404 NOT_FOUND; /index.html 404;
+/favicon.svg 200 image/svg+xml (positive control); /api/health 404; /privacy 404.
+Webpack writes dist/index.html; the repository had no Vercel configuration. These
+observations support the public-assets/output mismatch diagnosis. Authenticated
+Vercel build logs and exact dashboard build settings were not accessible.
+
+Added root vercel.json with pnpm build, dist output, browser headers, source-map
+refusal before filesystem lookup, real asset serving, API/missing-asset 404s and
+SPA fallback. No client screen, backend module or shared Study code changed.
+
+| Check run this session | Result |
+| --- | --- |
+| Baseline pnpm check | Passed before edits |
+| New deployment regression checks before configuration | All 4 failed because vercel.json was absent |
+| pnpm build | Passed; production HTML, hashed assets and compressed twins generated |
+| pnpm test:build after build | 10 passed, including 4 new deployment checks; initial/chunk budgets passed |
+| pnpm check after edits | TypeScript, oxlint and Biome passed |
+| Auth / Watch / Music / motion / server / security suites | 20 / 43 / 41 / 6 / 11 / 17 passed; 138 total, plus 10 build checks = 148 |
+| Mutation checks | Removing map refusal, API/asset separation or production headers made its targeted test fail; config restored byte for byte; all 4 deployment checks then passed |
+| Official Vercel schema constraints | Passed using installed schema-utils, omitting only the unsupported draft-04 meta-schema declaration; the schema contains no draft-04-only boolean exclusive numeric bounds |
+| pnpm audit:standards | Passed with 0 errors, 7 existing file-size warnings and 10 design/security-copy notices |
+| pnpm deps:audit | Failed with 1 moderate advisory: express > qs 6.16.0, GHSA-6pq8-jhm2-2vcw; patch 6.16.1 exists; no high/critical result reported |
+| git diff --check | Passed |
+| Local log ignore check | FEATURE_LOG.md is ignored and untracked |
+
+The installed Node validator could not load the schema's draft-04 meta-schema;
+Python's jsonschema package is also unavailable. No validator was installed.
+The passing check above validates the official constraints with version metadata
+omitted; it does not prove that Vercel accepted a deployment.
+
+Not performed: Vercel deployment or authenticated log inspection (the browser
+host was unavailable and the Vercel integration was not connected), a real
+browser check of the proposed deployment, live sign-in/playback, new backend
+hosting, Strix, or a new full-history secret scan. No commit/push, media upload,
+.env change, database migration or server startup occurred. The owner confirmed
+there is no hosted backend. The live site remains on the old deployment.
+
+See OPERATIONS.md for the client release steps, rollback and persistent-backend
+requirements. The new local route tests model the configured order against the
+real build; they do not emulate Vercel's entire routing/runtime platform.

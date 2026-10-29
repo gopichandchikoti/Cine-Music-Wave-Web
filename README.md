@@ -142,6 +142,11 @@ through a tunnel. Running it publishes access to this machine's application;
 review [OPERATIONS.md](OPERATIONS.md), media-sharing rights and the shared database
 decision first. A temporary tunnel is not a durable hosting or backup plan.
 
+Vercel can publish the built web client using the root vercel.json. It cannot
+run this app's current persistent SQLite and local-media backend unchanged.
+See [Vercel deployment actions](OPERATIONS.md#deployment-actions-vercel-web-client-2026-10-28)
+for build settings, routing, backend requirements and rollback.
+
 ## Troubleshooting
 
 | Symptom                        | Check                                                                               |

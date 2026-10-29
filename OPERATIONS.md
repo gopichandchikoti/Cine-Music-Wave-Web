@@ -40,3 +40,50 @@ Limits to know before sharing the address:
 - **Tunnel logs** in `validation\hosting\` are ignored by git; they hold the temporary public address.
 - `WATCH_ENCODER` (`x264` default, `amf` for AMD hardware) is listed in `.env.example`.
 - Evidence and what was not verified: `VALIDATION.md`, "Security hardening - 2026-10-26".
+
+## Deployment actions: Vercel web client (2026-10-28)
+
+The repository-root vercel.json explicitly runs pnpm build and publishes dist,
+where Webpack creates index.html. Use the Other framework preset, the repository
+root as Root Directory, and Node.js 24.x (22.5 or newer is required). The checked-in
+configuration overrides the build/output settings; public contains only source
+assets and is not the application output. Do not select Next.js or publish the
+repository root. No new secret or database setting is required for this static build.
+
+The ordered routes apply production browser headers, block source maps before
+static-file lookup, serve real assets, and then send browser navigation to
+index.html. Missing API routes and assets remain 404 instead of receiving HTML.
+The shell is no-cache; hashed assets are immutable. Keep the map refusal ahead of
+the filesystem handler: Webpack emits hidden maps into dist. No .env, local
+catalog, database or media belongs in this deployment.
+
+This configuration deploys the web client only. It does not run pnpm serve or
+server/index.ts. With no backend, the existing app reports that the account
+service could not be reached; Privacy and Terms remain public client routes.
+The owner confirmed on 2026-10-28 that no hosted backend exists. Accounts,
+playlists and streaming are not ready merely because Vercel reports Ready.
+
+For the complete current app, use a persistent single-instance Node service
+with its own private durable SQLite file and authorised media available to that
+server, following the production prerequisites above. Vercel Functions have a
+read-only filesystem and temporary scratch space, so the present SQLite/media
+server is not deployed there unchanged. A cloud server cannot read this PC's
+G: drive. Choosing/creating paid hosting, copying media, migrating the shared
+Study database and changing registration remain owner decisions.
+
+If retaining Vercel for the client, add a same-origin /api reverse proxy to the
+selected HTTPS backend before the SPA fallback, and validate the exact public
+origin, trusted proxy chain, secure cookies, CSRF marker and request body limits.
+Leave API_ORIGIN unset for that topology. Direct cross-origin API_ORIGIN needs
+separate CORS/cookie/CSP work and is not enabled by this fix. Do not relax origin
+or session checks to make a split deployment work.
+
+Release: publish the reviewed configuration, redeploy the latest main commit,
+and verify /, /watch, /music, /privacy, /terms, one real asset and a blocked map.
+Verify /api/health and real sign-in/media separately after hosting the backend.
+Rollback: promote the previous deployment in Vercel; no database migration is
+part of this change. The previous deployment is known to return 404 at /.
+
+References: [Vercel build settings](https://vercel.com/docs/builds/configure-a-build),
+[route configuration](https://vercel.com/docs/project-configuration/vercel-json),
+and [function filesystem limits](https://vercel.com/docs/functions/runtimes).

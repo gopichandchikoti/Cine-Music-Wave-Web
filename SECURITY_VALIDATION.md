@@ -72,3 +72,30 @@ test; Safari and Firefox.
 pnpm check && pnpm test:security && pnpm test:server && pnpm test:auth && pnpm test:watch && pnpm test:music
 pnpm build && pnpm test:build && pnpm audit:standards && pnpm deps:audit
 ```
+
+## Vercel client configuration review (2026-10-28)
+
+This is a deployment-scoped update; the earlier 2026-10-26 results are historical.
+The current production dependency audit has one moderate finding as listed below.
+No full security audit, new history scan, live browser check or Strix run was
+performed. No server code was changed, so no shared server fix required porting
+to Study Library or mobile. The Vercel config is specific to this web client.
+
+| ID | Severity | Evidence / action | Verification and status |
+| --- | --- | --- | --- |
+| V1 | Availability | Ready deployment serves favicon.svg but / and /index.html return NOT_FOUND; Webpack's app output is dist. Added explicit build/output and SPA routing. | 4 deployment regression checks; build passed; live release pending Vercel access. |
+| V2 | Low, prevented in proposed static deployment | Webpack emits hidden source maps that a static host would otherwise serve. Added refusal ahead of filesystem lookup, including compressed map suffixes. | Real emitted .js.map is the positive control; test fails when the refusal is removed. Vercel behavior still needs live verification. |
+| V3 | Deployment control | Static hosting does not run Express's browser-header middleware. Added production CSP and other browser headers directly to the deployment routes; retained approved style-src unsafe-inline. | Header test passes for app, asset and API-refusal paths and fails with the headers removed. No unsafe-eval or wildcard source is introduced. |
+| V4 | Moderate dependency advisory, open | pnpm deps:audit reports express > qs 6.16.0, GHSA-6pq8-jhm2-2vcw, patched in 6.16.1. The advisory requires qs.stringify with comma arrays on attacker-influenced data. | No application use of qs.stringify was identified in the reviewed server source; exploitability was not demonstrated. Dependency update deferred from this client deployment fix. Owner: maintainer; review before backend release, recorded 2026-10-28. |
+
+Reference for V4: [GitHub reviewed advisory](https://github.com/advisories/GHSA-6pq8-jhm2-2vcw).
+The current static build entry is src/main.tsx; the proposed Vercel deployment does
+not start the Express/SQLite/media server. No claim of complete dependency
+reachability analysis or a working hosted backend is made.
+
+Checks: 148 tests passed including 10 build checks; pnpm check and production
+build passed; standards audit 0 errors, 7 file-size warnings, 10 notices. The
+source-map, API/asset separation and header mutations each produced an expected
+failure before byte-for-byte restoration. Tests/build/vercel.test.mjs is included
+by pnpm test:build. OPERATIONS.md records release actions and rollback. Local
+FEATURE_LOG.md remains ignored. No credentials, database or media were published.

@@ -98,3 +98,15 @@ Added 2026-10-26. The rules are in `AGENTS.md` (Section 3, SEC-01 to SEC-52); th
 | Public address to server | Everything above, from the internet | Registration closed unless `-AllowSignup`; production settings passed as process variables and never written to `.env`; media only to signed-in accounts |
 
 **Decisions and limits.** Accounts are local (no OAuth or e-mail delivery is claimed). Web's `.env` points at Study Library's SQLite file, so one file holds both apps' accounts (open decision, SEC-45). Diagnostics are visible to every signed-in account. `style-src 'unsafe-inline'` stays in the CSP because of the approved design. No breached-password lookup. See `SECURITY_VALIDATION.md` for the rest.
+
+## Vercel deployment boundary (2026-10-28)
+
+The Vercel configuration publishes the Webpack client from dist with its History
+API fallback and production browser headers. It blocks emitted source maps and
+keeps /api and missing assets outside the client fallback. This changes no screen
+or approved design. Vercel is not the current account/media server: SQLite,
+filesystem scanning and authorised local media require a persistent backend.
+The owner confirmed no hosted backend exists. Until one is selected and verified,
+the static client can show the existing account-service error and public legal
+pages, but sign-in and playback are not a working hosted journey. Deployment and
+rollback details are in OPERATIONS.md. No local database or media is migrated.

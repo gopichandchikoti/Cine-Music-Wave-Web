@@ -8,6 +8,7 @@ server that authorises requests and streams files from a confined media root.
 This is a standalone extraction of Study Library's entertainment features.
 Study, Markdown and Learning are not mounted here. The separate native mobile
 app has its own data and permission model; it is not this website in a wrapper.
+**Live demo:** https://cine-music-wave-web.vercel.app
 
 ## Features
 
